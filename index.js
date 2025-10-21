@@ -20,7 +20,7 @@ const db = mysql.createConnection({
     password:'',
     database:'biodata',
     port:3307
-})
+});
 
 db.connect((err)=>{
     if(err){
@@ -28,4 +28,15 @@ db.connect((err)=>{
         return;
     }
     console.log('connection succuessfully!');
+});
+
+app.get('/api/mahasiswa', (req,res)=>{
+    db.query('select*from mahasiswa ',(err,result)=>{
+        if(err){
+            console.error('error excecuting query:'+err.stack);
+            res.status(500).send('error fetching users');
+            return;
+        }
+        res.json(results);
+    });
 });
