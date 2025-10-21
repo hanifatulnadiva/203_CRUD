@@ -76,3 +76,14 @@ app.put('/api/mahasiswa', (req,res)=>{
     );
 });
 
+app.delete('/api/mahasiswa', (req,res)=>{
+    const userId=res.params.id;
+    db.query('delete from mahasiswa where id=?',[userId],(err,result)=>{
+        if(err){
+                console.error(err);
+                return res.status(500).json({messege:'database error'});
+            }
+            req.json({message:'user deleted successfully'})
+    })
+     
+});
