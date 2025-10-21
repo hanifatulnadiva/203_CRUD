@@ -40,3 +40,22 @@ app.get('/api/mahasiswa', (req,res)=>{
         res.json(results);
     });
 });
+
+app.post('/api/mahasiswa', (req,res)=>{
+    const{nama, nim, kelas, prodi}=req.body;
+    if(!nama||!nim||!kelas||!prodi){
+        return res.status(400),json({message:"nama nim, kelas, prodi wajib diisi!"});
+    }
+    db.query(
+        'insert into mahasiswa(nama, nim, kelas, prodi)values(?,?,?,?)',
+        [nama, nim, kelas, prodi],
+        (err, result)=>{
+            if(err){
+                console.error(err);
+                return res.status(500).json({message:'datavase error'});
+            }
+            res.status(201).json({message:'user create successfully'});
+        }
+
+    );
+});
